@@ -1,5 +1,5 @@
 
-import { email,hobby } from "./index.js";
+import { email,hobby } from "./function.js";
 import {arrayOfObjects} from './persons.js'
 
 let valid = Array.isArray(arrayOfObjects);

@@ -7,11 +7,12 @@ function checkvalidity(dataset){
 
 
 
+
 // Find all users who are interested in playing video games.
 
 export function videogame(dataset, common){
     let answer=[]
-  if(checkvalidity(dataset)){
+  if(checkvalidity(dataset) && checkvalidity(common)){
       for(let x in dataset){
          let z = dataset[x].interests
         if(z.find(item => item == common)){
@@ -21,7 +22,7 @@ export function videogame(dataset, common){
       console.log(answer)
   }
   else{
-    console.log('give a proper dataset')
+    console.log('Give a proper dataset One Argument is missing Maybe')
   }
     
 
@@ -30,7 +31,7 @@ export function videogame(dataset, common){
 
 export function nationality(dataset,country){
   let answer=[]
-  if(checkvalidity(dataset)){
+  if(checkvalidity(dataset) && checkvalidity(country)){
     for( let x in dataset){
       if(dataset[x].nationality ==  country){
         answer.push(x)
@@ -45,7 +46,7 @@ export function nationality(dataset,country){
 
 export function qualification(dataset, degre){
   let answer =[]
-  if(checkvalidity(dataset)){
+  if(checkvalidity(dataset) && checkvalidity(degre)){
     for(let x in dataset){
       if(dataset[x].qualification == degre){
         answer.push(x)
@@ -105,7 +106,7 @@ export function Programminglanguage(dataset){
   }
  return console.log(answer)
  }else{
-  return  console.log('give a proper dataset')
+  return  console.log('NO PARAMETER IS THERE')
 }
 
 }

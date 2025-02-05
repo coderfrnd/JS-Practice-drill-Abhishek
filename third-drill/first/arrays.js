@@ -44,6 +44,7 @@ function find(elements, cb) {
   // Return `undefined` if no elements pass the truth test.
 }
 
+
 function filter(elements, cb) {
   // Do NOT use .filter, to complete this function.
   // Similar to `find` but you will return an array of all elements that passed the truth test

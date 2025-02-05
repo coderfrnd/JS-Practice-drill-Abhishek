@@ -3,7 +3,6 @@ function validity(dataset){
   }
   function checkfn(cb){
       return (typeof cb == "function") ? cb :false
-  
   }
 
    // How reduce works: A reduce function combines all elements into a single value going from left to right.

@@ -1,11 +1,20 @@
 const testObject = { name: "Bruce Wayne", age: 36, location: "Gotham" };
-function keys(obj) {
-    // Retrieve all the names of the object's properties.
-    // Return the keys as strings in an array.
-    // Based on http://underscorejs.org/#keys
-    for(let x in obj){
-        
+
+
+function value(obj) {
+
+    if(typeof obj == "object"){
+        let answer =[]
+        for(let keys in obj){
+            answer.push(obj[keys])
+            //  console.log(obj[x])
+         }
+         return answer
     }
-
-
+    else{
+      return  console.log("This is not a object ");   
+    }
   }
+  console.log(value(testObject));
+  
+  

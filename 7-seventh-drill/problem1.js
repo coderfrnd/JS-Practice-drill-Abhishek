@@ -15,12 +15,12 @@ export function createDirectoryAndFile(fileNum, folderName, deleteFilecb) {
             if (err) {
               console.log("Error", err);
             } else {
-              console.log("Done");
+              console.log("File creation Done");
             }
           }
         );
       }
-      deleteFilecb(folderName);
+      deleteFilecb();
     }
   });
 }
@@ -34,7 +34,7 @@ export function deleteFile(filename) {
       let index = 0;
       while (lengthOfFolder--) {
         let filePath = path.join(filename, data[index]);
-        fs.rm(filePath, (err) => {
+        fs.unlink(filePath, (err) => {
           if (err) {
             console.log("error", err);
           } else {

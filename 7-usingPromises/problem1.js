@@ -6,29 +6,16 @@ import path from "path";
 
 let fileName = "random.json";
 export function createDir(folderpath, fileName) {
-  fs.mkdir(folderpath, { recursive: true })
-    .then(() => {
-      console.log("Creation done");
-    })
-    .then(() => {
-      console.log("Done");
-      createFile(100, folderpath, fileName);
-    })
-    .then(() => {
-      deleteFiles(folderpath);
-    })
-    .catch((err) => {
-      throw err;
-    });
+ return fs.mkdir(folderpath, { recursive: true })
 }
 
-function createFile(numofFile, path, fileName) {
+ export function createFile(numofFile, path, fileName) {
   for (let index = 0; index < numofFile; index++) {
     fs.writeFile(`${path}/${index + 1}${fileName}`, "creation of file" + index);
   }
 }
 
-function deleteFiles(folerPath) {
+export function deleteFiles(folerPath) {
   fs.readdir(folerPath)
     .then((data) => {
       data.forEach((filePerIndex) => {

@@ -17,22 +17,38 @@ function readFile(filePath){
    
 }
 
+function appendAnyfile(filePath,fileName){
+    return fs.appendFile(filePath,fileName+'\n')
+}
+
 function upperCase(fileContent,fileName){
      fileContent = fileContent.toUpperCase()
-    fs.writeFile(fileName,fileContent)
-    return fileContent
-     
+  return  fs.writeFile(fileName,fileContent)
+          .then(()=> {
+           appendAnyfile('fileName.txt',fileName)
+           return fileName
+          }
+        )
+          
+}
+
+function lowerCase(fileContent,fileName){
+          fileContent =fileContent.toLowerCase()
+          fileContent = fileContent.split(".").join("\n")
+          return  fs.writeFile(fileName,fileContent)
+              .then(()=>{
+                appendAnyfile('fileName.txt',fileName)
+                return fileName
+              } )
+          
 }
 
 
 
-
-
 readFile(filePath)
-.then((content)=>{
-    upperCase(content,'upper.txt') 
-}).then((data)=>{
-    console.log(data);  
+.then((fileContent) => {
+  return upperCase(fileContent,'upper.txt')
 })
-
-// function
+ .then((data)=>{
+    
+ })

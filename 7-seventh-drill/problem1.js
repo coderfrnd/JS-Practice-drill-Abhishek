@@ -1,48 +1,47 @@
 import fs from "fs";
 import path from "path";
 
-export function createDirectoryAndFile(fileNum, folderName, deleteFilecb) {
-  return fs.mkdir(`${folderName}`, { recursive: true }, (err) => {
+// Using callbacks and the fs module's asynchronous functions, do the following:
+// 1. Create a directory of random JSON files
+// 2. Delete those files simultaneously
+
+export function createDirectory(dirPath, fileNum, cbfunction) {
+  fs.mkdir(dirPath, { recursive: true }, (err) => {
     if (err) {
-      console.log("something went wrong", err);
-    } else {
-      console.log("creation successfull Directory");
-      for (let index = 1; index <= fileNum; index++) {
-        fs.writeFile(
-          `${folderName}/${index}-random.json`,
-          JSON.stringify(`${index}`, null, 2),
-          (err) => {
-            if (err) {
-              console.log("Error", err);
-            } else {
-              console.log("File creation Done");
-            }
-          }
-        );
-      }
-      deleteFilecb();
+      return console.log("Something wrong in folder creation", err);
     }
+    cbfunction(fileNum, dirPath);
   });
 }
 
-export function deleteFile(filename) {
-  fs.readdir(`${filename}`, (err, data) => {
-    if (err) {
-      console.log(err);
-    } else {
-      let lengthOfFolder = data.length;
-      let index = 0;
-      while (lengthOfFolder--) {
-        let filePath = path.join(filename, data[index]);
-        fs.unlink(filePath, (err) => {
-          if (err) {
-            console.log("error", err);
-          } else {
-            console.log("File Deletion Done",filePath);
-          }
-        });
-        index++;
+export function writeFile(fileNum, filePath, cbfunction) {
+  for (let i = 1; i <= fileNum; i++) {
+    fs.writeFile(`${filePath}/${i}-random.json`, `${i}`, (err) => {
+      if (err) {
+        return console.log("Something wrong in random file creation", err);
       }
+    });
+  }
+  cbfunction(filePath);
+}
+
+export function readDir(folderPath, cbfunction) {
+  fs.readdir(folderPath, (err, data) => {
+    if (err) {
+      return console.log("Something wrong in reading directory", err);
     }
+    cbfunction(folderPath, data);
+  });
+}
+
+export function deleteAllFile(folderPath, listOfFile) {
+  listOfFile.forEach((singleFile) => {
+    let filePath = path.join(folderPath, singleFile);
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        return console.log("something went wrong in deletion", err);
+      }
+      console.log("File deletion done");
+    });
   });
 }

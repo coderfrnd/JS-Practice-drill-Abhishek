@@ -1,11 +1,20 @@
-import {deleteFile , createDirectoryAndFile} from '../problem1.js'
+import {
+  createDirectory,
+  deleteAllFile,
+  readDir,
+  writeFile,
+} from "../problem1.js";
 
-let folderName = "testingDirectory"
+let folderName = "randomJson";
+let numOfFile = 5;
 
-createDirectoryAndFile(5,folderName,()=>{
-    deleteFile(folderName)
-})
-
-
-
-
+createDirectory(folderName, numOfFile, (numOfFile, folderPath) => {
+  console.log("Folder Creation done");
+  writeFile(numOfFile, folderPath, (folderPath) => {
+    console.log("File Creation done");
+    readDir(folderPath, (folderPath, data) => {
+      console.log("Read file done");
+      deleteAllFile(folderPath, data);
+    });
+  });
+});

@@ -1,3 +1,4 @@
+import path from "path";
 import {
   createDirectory,
   deleteAllFile,
@@ -7,8 +8,9 @@ import {
 
 let folderName = "randomJson";
 let numOfFile = 5;
+let folderPath = path.join(process.cwd(), folderName);
 
-createDirectory(folderName, numOfFile, (numOfFile, folderPath) => {
+createDirectory(folderPath, numOfFile, (numOfFile, folderPath) => {
   console.log("Folder Creation done");
   writeFile(numOfFile, folderPath, (folderPath) => {
     console.log("File Creation done");

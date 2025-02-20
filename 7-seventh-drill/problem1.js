@@ -15,14 +15,18 @@ export function createDirectory(dirPath, fileNum, cbfunction) {
 }
 
 export function writeFile(fileNum, filePath, cbfunction) {
+  let fileCount = 0;
   for (let i = 1; i <= fileNum; i++) {
     fs.writeFile(`${filePath}/${i}-random.json`, `${i}`, (err) => {
       if (err) {
         return console.log("Something wrong in random file creation", err);
       }
     });
+    fileCount++;
   }
-  cbfunction(filePath);
+  if (fileCount == fileNum) {
+    cbfunction(filePath);
+  }
 }
 
 export function readDir(folderPath, cbfunction) {

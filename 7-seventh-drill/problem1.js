@@ -39,13 +39,19 @@ export function readDir(folderPath, cbfunction) {
 }
 
 export function deleteAllFile(folderPath, listOfFile) {
+  let count = 0;
   listOfFile.forEach((singleFile) => {
     let filePath = path.join(folderPath, singleFile);
     fs.unlink(filePath, (err) => {
       if (err) {
         return console.log("something went wrong in deletion", err);
       }
-      console.log("File deletion done");
+      count++;
+      console.log("File deletion done", `${singleFile}`);
+      if (count === listOfFile.length) {
+        console.log("Done all the file deleted");
+      }
     });
   });
+  // console.log(count);
 }

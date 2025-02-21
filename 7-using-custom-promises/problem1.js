@@ -1,28 +1,26 @@
 import fs from "fs";
-import path, { resolve } from "path";
+import path from "path";
 // 1. Create a directory of random JSON files
 // 2. Delete those files simultaneously
 
-let folderPath = path.join(process.cwd(), "testing");
-
-function craeteDirectory(folderPath) {
+export function createDirectory(folderPath) {
   return new Promise((resolve, reject) => {
     fs.mkdir(folderPath, { recursive: true }, (err) => {
       if (err) {
         reject(err);
       }
-      resolve(folderPath);
+      return resolve(folderPath);
     });
   });
 }
 
-function createFiles(folderPath, numberOfFiles) {
+export function createFiles(folderPath, numberOfFiles) {
   let promiseArr = [];
   for (let index = 1; index <= numberOfFiles; index++) {
     let singlePromise = new Promise((resolve, reject) => {
       fs.writeFile(
         `${folderPath}/${index}-random.json`,
-        `${index}+random.json`,
+        `{"id" : ${index} , "name":${index}-random.json }`,
         (err) => {
           if (err) {
             reject(err);
@@ -33,10 +31,15 @@ function createFiles(folderPath, numberOfFiles) {
     });
     promiseArr.push(singlePromise);
   }
-  return Promise.all(promiseArr);
+  return Promise.all(promiseArr).then((listOfFile) => {
+    listOfFile.forEach((ele) => {
+      console.log(`${ele} is created`);
+    });
+    return listOfFile;
+  });
 }
 
-function readDirectory(folderPath) {
+export function readDirectory(folderPath) {
   return new Promise((resolve, reject) => {
     fs.readdir(folderPath, (err, fileList) => {
       if (err) {
@@ -47,15 +50,21 @@ function readDirectory(folderPath) {
   });
 }
 
-craeteDirectory(folderPath)
-  .then((folderPath) => {
-    return createFiles(folderPath, 5);
-  })
-  .then((data) => {
-    console.log(data);
-    return readDirectory(folderPath);
-  })
-  .then((data) => {})
-  .catch((err) => {
-    console.log("erros happen", err);
+export function deleteDirectory(listOfFile, folderPath) {
+  let promiseArr = listOfFile.map((element) => {
+    return new Promise((resolve, reject) => {
+      let filePath = path.join(folderPath, element);
+      fs.unlink(filePath, (err) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(`file successfully deleted ${element}`);
+      });
+    });
   });
+  return Promise.all(promiseArr).then((data) => {
+    data.forEach((ele) => {
+      console.log(ele);
+    });
+  });
+}

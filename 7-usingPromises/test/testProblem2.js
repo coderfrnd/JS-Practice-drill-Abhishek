@@ -1,10 +1,10 @@
 import path from "path";
 import {
-  appendAnyfile,
   convertTolowerCase,
   convertToSortedFile,
   convertToUpperCase,
   deleteAllFile,
+  deleteFileData,
   readFile,
 } from "../problem2.js";
 
@@ -13,21 +13,30 @@ let filePath = path.join(process.cwd(), textFileName);
 let upperCaseFileName = "upperCase.txt";
 let lowerCaseFileName = "lowerCase.txt";
 let sortCaseFileName = "sortCase.txt";
+let textFilesNamePath = "fileName.txt";
 
 readFile(filePath)
   .then((fileContent) => {
-    return convertToUpperCase(fileContent, upperCaseFileName);
+    return convertToUpperCase(
+      fileContent,
+      upperCaseFileName,
+      textFilesNamePath
+    );
   })
-  .then((fileName) => {
-    return convertTolowerCase(fileName, lowerCaseFileName);
+  .then(({ upperCaseFileName, textFilesNamePath }) => {
+    return convertTolowerCase(
+      { upperCaseFileName, textFilesNamePath },
+      lowerCaseFileName
+    );
   })
-  .then((fileName) => {
-    return convertToSortedFile(fileName, sortCaseFileName);
+  .then(({ lowerCaseFileName, textFilesNamePath }) => {
+    return convertToSortedFile(
+      { lowerCaseFileName, textFilesNamePath },
+      sortCaseFileName
+    );
   })
   .then((listOfFile) => {
-    setTimeout(() => {
-      deleteAllFile(listOfFile);
-    }, 2000);
+    return deleteAllFile(listOfFile);
   })
   .catch((err) => {
     console.error(err);

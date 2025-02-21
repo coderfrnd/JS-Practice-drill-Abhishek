@@ -1,20 +1,23 @@
-import { createDir, createFile, deleteFiles } from "../problem1.js";
-let folderPath = '../testing-folder'
-let fileName = 'random.json'
+import path from "path";
+import { createDir, createFile, deleteAllFile, readDir } from "../problem1.js";
 
+let folderName = "randomJson";
+let fileName = "random.json";
+let numofFile = 5;
+let folderPath = path.join(process.cwd(), folderName);
 
-createDir(folderPath)
-.then(()=>{
-    console.log("Creation of folder done");
-})
-.then(()=>{
-    console.log("creation of file done"); 
-    createFile(5,folderPath,fileName)
-})
-.then(()=>{
-    console.log("Deletion done"); 
-   deleteFiles(folderPath)
-})
-.catch((err)=>{
-    console.log("error",err); 
-})
+createDir(numofFile, folderPath, fileName)
+  .then(({ numofFile, folderPath, fileName }) => {
+    return createFile(numofFile, folderPath, fileName);
+  })
+  .then((folderPath) => {
+    return readDir(folderPath);
+  })
+  .then(({ listOfFile, folderPath }) => {
+    setTimeout(() => {
+      deleteAllFile(listOfFile, folderPath);
+    }, 2000);
+  })
+  .catch((err) => {
+    console.log("Error happen", err);
+  });

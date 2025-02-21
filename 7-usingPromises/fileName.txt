@@ -1,4 +1,0 @@
-upper.txtupper.txtupper.txt
-upper.txt
-upper.txt
-lowercase.txt

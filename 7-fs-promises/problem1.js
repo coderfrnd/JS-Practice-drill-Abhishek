@@ -16,7 +16,7 @@ export function createFile(numofFile, folderPath, fileName) {
   for (let index = 0; index < numofFile; index++) {
     promise = fs.writeFile(
       `${folderPath}/${index + 1}${fileName}`,
-      "creation of file" + index
+      `{"id" : ${index} , "name":${index}-random.json }`
     );
     promisesCount.push(promise);
   }

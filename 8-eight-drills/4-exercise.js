@@ -1,33 +1,27 @@
-// 1. Print out "Program started" at the start of your code
-// 2. Create a Promise that resolves after 3 seconds
-//    and rejects after 2 seconds
-// 3. Log out the promise while it's pending
-// 4. Print out "Program in progress..." as well
-// 5. Print out "Program complete" if the promise fulfills
-// 6. Print out "Program failure" if the promise rejects
-// HINT: Use setTimeout for the delay
+// 1. Create a Promise that resolves with the number 10 after
+// 3 seconds
+// 2. Create another Promise that resolves with the number
+// 20 after 5 seconds
+// How can we log out the sum (30) of these two resolved values
+// once, after BOTH promises successfully fulfill?
+// HINT: Use Google/Documentation to help find an answer
+// HINT2: You can Google for something like:
+//"resolve 2 promises at the same time javascript"
 
-console.log("Program started");
-let ans = true;
-
-let promise = new Promise((res, rej) => {
+let promise1 = new Promise((resolve, reject) => {
   setTimeout(() => {
-    rej("Program failure");
-  }, 2000);
-
-  setTimeout(() => {
-    res("Program Completed");
+    return resolve(10);
   }, 3000);
 });
+let promise2 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    return resolve(20);
+  }, 5000);
+});
+let promiseArr = [];
+promiseArr.push(promise1);
+promiseArr.push(promise2);
 
-console.log(promise);
-
-console.log("Program in progress...");
-
-promise
-  .then((value) => {
-    console.log(value);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+Promise.all(promiseArr).then((result) => {
+  console.log(result[0] + result[1]);
+});

@@ -11,7 +11,7 @@ console.log("Program started");
 
 let promise = new Promise((resolve, reject) => {
   setTimeout(() => {
-    return resolve("Progam Completed");
+    resolve("Progam Completed");
   }, 3000);
 });
 console.log(promise);

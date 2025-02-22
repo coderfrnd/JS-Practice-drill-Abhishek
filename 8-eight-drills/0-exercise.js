@@ -14,6 +14,7 @@ let promise = new Promise((resolve, reject) => {
     return resolve("Progam Completed");
   }, 3000);
 });
+console.log(promise);
 
 console.log("program in progress");
 promise.then((data) => {

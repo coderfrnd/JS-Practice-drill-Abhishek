@@ -23,3 +23,41 @@
 //        myPromise.then(...).then(...) // steps 5-7
 //        myPromise.then(...).then(...) // steps 8-10
 // BONUS: WHY does it work this way?
+
+console.log("Program started");
+
+let promise1 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    return resolve({ data: "Hello, friend!", error: null });
+  }, 5000);
+});
+
+console.log(promise1);
+
+console.log("Program in Progress ....");
+
+promise1
+  .then((value) => {
+    console.log(value);
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve("First promise chain complete!");
+      }, 2000);
+    });
+  })
+  .then((value) => {
+    console.log(value);
+  });
+
+promise1
+  .then((value) => {
+    return new Promise((resolve, reject) => {
+      console.log(value);
+      setTimeout(() => {
+        return resolve("Second promise chain complete!");
+      }, 10000);
+    });
+  })
+  .then((value) => {
+    console.log(value);
+  });

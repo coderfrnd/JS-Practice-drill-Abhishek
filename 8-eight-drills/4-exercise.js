@@ -22,6 +22,10 @@ let promiseArr = [];
 promiseArr.push(promise1);
 promiseArr.push(promise2);
 
-Promise.all(promiseArr).then((result) => {
-  console.log(result[0] + result[1]);
-});
+Promise.all(promiseArr)
+  .then((result) => {
+    console.log(result[0] + result[1]);
+  })
+  .catch((err) => {
+    console.log("Error Happen", err);
+  });

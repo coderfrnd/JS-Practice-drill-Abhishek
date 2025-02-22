@@ -32,4 +32,7 @@ promise
   })
   .then((value) => {
     console.log(value);
+  })
+  .catch((err) => {
+    console.log("Errors happen", err);
   });

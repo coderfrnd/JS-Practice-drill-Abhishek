@@ -17,6 +17,10 @@ let promise = new Promise((resolve, reject) => {
 console.log(promise);
 
 console.log("program in progress");
-promise.then((data) => {
-  console.log(data);
-});
+promise
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {
+    console.log("Errors happen", err);
+  });

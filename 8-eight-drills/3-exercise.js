@@ -47,6 +47,9 @@ promise1
   })
   .then((value) => {
     console.log(value);
+  })
+  .catch((err) => {
+    console.log("Errors happen", err);
   });
 
 promise1
@@ -60,4 +63,7 @@ promise1
   })
   .then((value) => {
     console.log(value);
+  })
+  .catch((err) => {
+    console.log("Errors happen", err);
   });

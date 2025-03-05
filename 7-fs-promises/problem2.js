@@ -20,11 +20,14 @@ export function convertToUpperCase(
   textFilesNamePath
 ) {
   fileContent = fileContent.toUpperCase();
-  return fs.writeFile(upperCaseFileName, fileContent).then(() => {
-    appendAnyfile(textFilesNamePath, upperCaseFileName);
-    console.log("Upper Case file created");
-    return { upperCaseFileName, textFilesNamePath };
-  });
+  return fs
+    .writeFile(upperCaseFileName, fileContent)
+    .then(() => {
+      return appendAnyfile(textFilesNamePath, upperCaseFileName);
+    })
+    .then(() => {
+      return { upperCaseFileName, textFilesNamePath };
+    });
 }
 
 export function convertToSortedFile(
@@ -34,13 +37,15 @@ export function convertToSortedFile(
   return readFile(lowerCaseFileName)
     .then((fileContent) => {
       fileContent = fileContent.split(".").sort().join("\n");
-      fs.writeFile(sortCaseFileName, fileContent);
+      return fs.writeFile(sortCaseFileName, fileContent);
     })
     .then(() => {
       console.log("Sorted File Creation done");
     })
     .then(() => {
-      appendAnyfile(textFilesNamePath, sortCaseFileName);
+      return appendAnyfile(textFilesNamePath, sortCaseFileName);
+    })
+    .then((val) => {
       return textFilesNamePath;
     });
 }
@@ -51,7 +56,6 @@ export function deleteAllFile(fileNames) {
       let filesToDelete = fileContent
         .split("\n")
         .filter((ele) => ele.trim() !== "");
-
       return Promise.all(
         filesToDelete.map((element) =>
           fs
@@ -86,7 +90,9 @@ export function convertTolowerCase(
       return lowerCaseFileName;
     })
     .then((lowerCaseFileName) => {
-      appendAnyfile(textFilesNamePath, lowerCaseFileName);
+      return appendAnyfile(textFilesNamePath, lowerCaseFileName);
+    })
+    .then(() => {
       return { lowerCaseFileName, textFilesNamePath };
     })
     .catch((err) => {

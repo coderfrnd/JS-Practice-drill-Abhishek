@@ -30,16 +30,13 @@ let server = http.createServer((req, res) => {
           res.writeHead(statusCode, { "Content-Type": "text/plain" });
           res.end(`Your status code is: ${statusCode}`);
         }
-
         break;
 
       case delayNumber !== null:
-        const delaySeconds = parseInt(delayNumber[1], 10) * 1000;
-        console.log(`Delaying for: ${delayNumber[1]} seconds`);
-        setTimeout(() => {
-          res.writeHead(200, { "Content-Type": "text/plain" });
-          res.end(`After delay of ${delayNumber[1]} sec`);
-        }, delaySeconds);
+        delaySecondRoute(delayNumber[1], res);
+        res.on("finish", () => {
+          console.log("after delay it reached now");
+        });
         break;
 
       default:
@@ -48,7 +45,7 @@ let server = http.createServer((req, res) => {
     }
   } else {
     res.writeHead(404, { "Content-Type": "text/plain" });
-    res.end("Not Found");
+    res.end("Not Found Method only Get allowed");
   }
 });
 
@@ -92,4 +89,12 @@ function htmlCode() {
 
 function uuId() {
   return JSON.stringify({ uuid: crypto.randomUUID() }, null, 2);
+}
+function delaySecondRoute(delayTime, res) {
+  const delaySeconds = parseInt(delayTime, 10) * 1000;
+  console.log(`Delaying for: ${delayTime} seconds`);
+  setTimeout(() => {
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.end(`After delay of ${delayTime} sec`);
+  }, delaySeconds);
 }

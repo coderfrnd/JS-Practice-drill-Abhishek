@@ -1,5 +1,5 @@
 const http = require("http");
-const crypto = require("crypto");
+const { v4: uuidv4 } = require("uuid");
 
 let server = http.createServer((req, res) => {
   const url = req.url;
@@ -12,7 +12,6 @@ let server = http.createServer((req, res) => {
         res.writeHead(200, { "Content-Type": "text/html" });
         res.end(htmlCode());
         break;
-
       case url === "/json":
         res.writeHead(200, { "Content-Type": "application/json" });
         res.on("finish", () => console.log("Data sent successfully"));
@@ -26,7 +25,7 @@ let server = http.createServer((req, res) => {
 
       case statusNumber !== null:
         const statusCode = parseInt(statusNumber[1], 10);
-        if (statusCode < 699) {
+        if (statusCode < 599) {
           res.writeHead(statusCode, { "Content-Type": "text/plain" });
           res.end(`Your status code is: ${statusCode}`);
         }
@@ -92,13 +91,18 @@ function htmlCode() {
 }
 
 function uuId() {
-  return JSON.stringify({ uuid: crypto.randomUUID() }, null, 2);
+  return JSON.stringify({ uuid: uuidv4() }, null, 2);
 }
 function delaySecondRoute(delayTime, res) {
-  const delaySeconds = parseInt(delayTime, 10) * 1000;
-  console.log(`Delaying for: ${delayTime} seconds`);
-  setTimeout(() => {
-    res.writeHead(200, { "Content-Type": "text/plain" });
-    res.end(`After delay of ${delayTime} sec`);
-  }, delaySeconds);
+  if (delayTime > 0) {
+    const delaySeconds = parseInt(delayTime, 10) * 1000;
+    console.log(`Delaying for: ${delayTime} seconds`);
+    setTimeout(() => {
+      res.writeHead(200, { "Content-Type": "text/plain" });
+      res.end(`After delay of ${delayTime} sec`);
+    }, delaySeconds);
+  } else {
+    res.writeHead(400, { "Content-Type": "text/plain" });
+    res.end(`Not Valid`);
+  }
 }

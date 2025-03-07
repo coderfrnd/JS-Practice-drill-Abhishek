@@ -3,7 +3,6 @@ const { v4: uuidv4 } = require("uuid");
 
 let server = http.createServer((req, res) => {
   const url = req.url;
-
   const statusNumber = url.match(/^\/status\/(\d+)$/);
   const delayNumber = url.match(/^\/delay\/(\d+)$/);
   if (req.method == "GET") {

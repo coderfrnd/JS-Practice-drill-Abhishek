@@ -120,9 +120,9 @@ WHERE u.name = 'Bob' AND c.name = '#random';
 SELECT 
     u.name AS user_name, 
     COUNT(m.content) AS message_count
-FROM Message AS m
-JOIN User AS u ON m.user_id = u.id
-JOIN Channel AS c ON c.id = m.channel_id
+FROM message AS m
+JOIN user AS u ON m.user_id = u.id
+JOIN channel AS c ON c.id = m.channel_id
 GROUP BY u.name
 ORDER BY u.name DESC;
 
@@ -131,9 +131,9 @@ SELECT
     u.name AS user_name, 
     c.name AS channel_name, 
     COUNT(m.content) AS message_count
-FROM Message AS m
-JOIN User AS u ON m.user_id = u.id
-JOIN Channel AS c ON c.id = m.channel_id
+FROM message AS m
+JOIN user AS u ON m.user_id = u.id
+JOIN channel AS c ON c.id = m.channel_id
 GROUP BY u.name, c.name;
 
 -- What SQL keywords or concept would you use if you wanted to automatically delete all messages by a user if that user were deleted from the user table?

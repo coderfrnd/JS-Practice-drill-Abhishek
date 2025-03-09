@@ -12,7 +12,7 @@ CREATE TABLE user (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL
 );
-CREATE TABLE channelUserRelation (
+CREATE TABLE channel_user_relation (
     user_id INT,
     channel_id INT,
     FOREIGN KEY (channel_id) REFERENCES channel(id),
@@ -35,7 +35,7 @@ VALUES ("Alice"), ("Bob"), ("Chris");
 INSERT INTO channel (name, organization_id)
 VALUES ("#general", 1), ("#random", 1);
 
-INSERT INTO channelUserRelation (user_id, channel_id)
+INSERT INTO channel_user_relation (user_id, channel_id)
 VALUES (1, 1), (1, 2), (2, 1), (3, 1);
 
 INSERT INTO message (content, user_id, channel_id)
@@ -84,14 +84,14 @@ SELECT DISTINCT
     c.name AS channel_name, 
     u.name AS user_name
 FROM channel AS c
-JOIN channelUserRelation AS cur ON c.id = cur.channel_id
+JOIN channel_user_relation AS cur ON c.id = cur.channel_id
 JOIN user AS u ON u.id = cur.user_id
 WHERE u.name = 'Alice';
 
 --  List all users that belong to the #general channel
 SELECT u.name AS user_name 
 FROM channel AS c
-JOIN channelUserRelation AS cur ON c.id = cur.channel_id
+JOIN channel_user_relation AS cur ON c.id = cur.channel_id
 JOIN user AS u ON u.id = cur.user_id
 WHERE c.name = "#general";
 
